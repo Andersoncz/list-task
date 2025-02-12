@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import AddTasks from './components/AddTasks'
 import Tasks from './components/Tasks'
+import { v4 } from 'uuid'
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -39,28 +40,39 @@ function App() {
  function onDeleteTaskClick(TaskId) {
   const newTasks = tasks.filter((task) => task.id !== TaskId)
   setTasks(newTasks)
-
-
-
-    
-    
+}
+//função para adicionar tarefa
+  function onAddtaskSubmit(title, description) {
+    const newTask = {
+      id: v4(),
+      title,
+      description,
+      isCopleted: false,
     }
-
-    return (
-      <div className='w-screen h-screen bg-slate-500 flex justify-center p-6'>
-        <div className='w-[500px]'>
-          <h1 className='text-3xl text-slate-100'>Gerenciador de tarefas
-          </h1>
-          <AddTasks />
-          <Tasks tasks={tasks}
-            onClickTesks={onClickTesks} 
-            onDeleteTaskClick={onDeleteTaskClick}/>
-        </div>
-      </div>
-    )
-  }
+    setTasks([...tasks, newTask])
   
-  export default App
+
+}
+
+return (
+  <div className='w-screen h-screen bg-slate-500 flex justify-center p-6'>
+    <div className='w-[500px] space-y-4'>
+      <h1 className='text-3xl text-slate-100'>Gerenciador de tarefas
+      </h1>
+      <AddTasks adicionarTarefa={onAddtaskSubmit}/>
+      <Tasks tasks={tasks}
+        onClickTesks={onClickTesks} 
+        onDeleteTaskClick={onDeleteTaskClick}/>
+    </div>
+  </div>
+)
+}
+
+export default App
+
+
+    
+    
 
 
 
